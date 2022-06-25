@@ -14,7 +14,7 @@ Use Material-UI for creating UI.
 
 ## Functions
 
-There are 3 functions for this project.
+There are 6 functions for this project.
 
 - Sign up
 - Sign in
