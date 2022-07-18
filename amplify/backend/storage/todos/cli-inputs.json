@@ -1,0 +1,14 @@
+{
+  "resourceName": "todos",
+  "tableName": "todos",
+  "partitionKey": {
+    "fieldName": "username",
+    "fieldType": "string"
+  },
+  "sortKey": {
+    "fieldName": "id",
+    "fieldType": "number"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}
