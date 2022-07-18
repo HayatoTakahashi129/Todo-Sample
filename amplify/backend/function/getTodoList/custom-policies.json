@@ -1,0 +1,15 @@
+[
+  {
+    "Action": [
+      "dynamodb:PartiQLInsert",
+      "dynamodb:PartiQLUpdate",
+      "dynamodb:PartiQLDelete",
+      "dynamodb:PartiQLSelect"
+    ],
+    "Resource": [
+      {
+        "Ref": "storagetodosArn"
+      }
+    ]
+  }
+]

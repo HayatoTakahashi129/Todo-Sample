@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "paths": {
+    "/todos": {
+      "name": "/todos",
+      "lambdaFunction": "getTodoList",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    },
+    "/todo": {
+      "name": "/todo",
+      "lambdaFunction": "getTodoList",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    },
+    "/todo/add": {
+      "name": "/todo/add",
+      "lambdaFunction": "getTodoList",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create"
+        ]
+      }
+    },
+    "/todo/edit": {
+      "name": "/todo/edit",
+      "lambdaFunction": "getTodoList",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read",
+          "update"
+        ]
+      }
+    },
+    "/todo/delete": {
+      "name": "/todo/delete",
+      "lambdaFunction": "getTodoList",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "delete"
+        ]
+      }
+    }
+  }
+}

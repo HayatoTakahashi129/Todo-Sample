@@ -9,7 +9,8 @@
       "UnauthRoleName": "amplify-cognitodemo-dev-01435-unauthRole",
       "StackName": "amplify-cognitodemo-dev-01435",
       "StackId": "arn:aws:cloudformation:ap-northeast-1:276161490400:stack/amplify-cognitodemo-dev-01435/b0c19700-f562-11ec-a2b3-0aa603e8288d",
-      "AmplifyAppId": "d27f29fcr8xoff"
+      "AmplifyAppId": "d27f29fcr8xoff",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-cognitodemo-dev-01435-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
@@ -29,6 +30,10 @@
           "RECAPTCHASECRET": "n",
           "deploymentBucketName": "amplify-cognitodemo-dev-01435-deployment",
           "s3Key": "amplify-builds/cognitodemo881eb16cVerifyAuthChallengeResponse-436d673052755a2f504a-build.zip"
+        },
+        "getTodoList": {
+          "deploymentBucketName": "amplify-cognitodemo-dev-01435-deployment",
+          "s3Key": "amplify-builds/getTodoList-4f397955372b6e575065-build.zip"
         }
       }
     }
