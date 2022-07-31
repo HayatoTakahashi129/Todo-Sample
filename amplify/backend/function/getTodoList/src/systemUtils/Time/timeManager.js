@@ -1,24 +1,27 @@
 const { formatToTimeZone } = require("date-fns-timezone");
+const { BuisnessException } = require("../Errors/Exceptions");
 const { asyncLocalStorage } = require("../ThreadLocal/ThreadStorage");
 const TIME_ZONE = "Asia/Tokyo";
-const TIMESTAMP_FORMAT = "YYYY-MM-DD HH:mm:ssXXX";
+const TIMESTAMP_FORMAT = "YYYY-MM-DDTHH:mm:ss.SSSZ";
 
-class TimeMangaer {
-  constructor() {
-    const contextStore = asyncLocalStorage.getStore();
-    this.time = contextStore.get("time");
-    this.currentTimestamp = formatToTimeZone(this.time, TIMESTAMP_FORMAT, {
-      timeZone: TIME_ZONE,
-    });
-  }
+const getTime = () => {
+  const contextStore = asyncLocalStorage.getStore();
+  if (!contextStore)
+    throw new BuisnessException(500, null, "Can't get Thread Local.");
+  const time = contextStore.get("time");
 
-  get timestamp() {
-    return this.currentTimestamp;
-  }
+  return time;
+};
 
-  get time() {
-    return this.time;
-  }
-}
+exports.getTimestamp = () => {
+  const time = getTime();
+  const currentTimestamp = formatToTimeZone(time, TIMESTAMP_FORMAT, {
+    timeZone: TIME_ZONE,
+  });
+  return currentTimestamp;
+};
 
-module.exports = TimeMangaer;
+exports.getTime = () => {
+  const time = getTime();
+  return time;
+};

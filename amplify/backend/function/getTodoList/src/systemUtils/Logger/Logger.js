@@ -1,9 +1,12 @@
 const { asyncLocalStorage } = require("../ThreadLocal/ThreadStorage");
 
 const log4js = require("log4js");
+const { BuisnessException } = require("../Errors/Exceptions");
 
 const getThreadLocal = () => {
   const contextStore = asyncLocalStorage.getStore();
+  if (!contextStore)
+    throw new BuisnessException(500, null, "Can't get Thread Local.");
 
   const userId = contextStore.get("userId");
   const trackId = contextStore.get("trackId");

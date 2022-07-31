@@ -1,4 +1,10 @@
-const AWS = require("aws-sdk");
+/* Amplify Params - DO NOT EDIT
+	ENV
+	REGION
+	STORAGE_TODOS_ARN
+	STORAGE_TODOS_NAME
+	STORAGE_TODOS_STREAMARN
+Amplify Params - DO NOT EDIT */const AWS = require("aws-sdk");
 const awsServerlessExpressMiddleware = require("aws-serverless-express/middleware");
 const bodyParser = require("body-parser");
 const express = require("express");

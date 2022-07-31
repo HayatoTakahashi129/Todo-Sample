@@ -59,6 +59,16 @@ const useAuthentication = () => {
     }
   };
 
+  const refresh = async () => {
+    const result = await Auth.currentSession();
+    const tokens = {
+      idToken: result.getIdToken().getJwtToken(),
+      accessToken: result.getAccessToken().getJwtToken(),
+      refreshtToken: result.getRefreshToken().getJwtToken(),
+    };
+    dispatch(updateTokens(tokens));
+  };
+
   return {
     signUp,
     confirmSignUp,

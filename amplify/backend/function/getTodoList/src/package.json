@@ -8,6 +8,8 @@
     "@aws-sdk/client-dynamodb": "^3.121.0",
     "@aws-sdk/lib-dynamodb": "^3.121.0",
     "@aws-sdk/util-dynamodb": "^3.128.0",
+    "ajv": "^8.11.0",
+    "ajv-formats": "^2.1.1",
     "async_hooks": "^1.0.0",
     "aws-serverless-express": "^3.3.5",
     "body-parser": "^1.19.1",
