@@ -36,7 +36,6 @@ const useAuthentication = () => {
   const signIn = async (username, password) => {
     try {
       const user = await Auth.signIn(username, password);
-      console.log("user: ", user);
       const tokens = {
         idToken: user.signInUserSession.idToken.jwtToken,
         accessToken: user.signInUserSession.accessToken.jwtToken,
@@ -61,12 +60,27 @@ const useAuthentication = () => {
 
   const refresh = async () => {
     const result = await Auth.currentSession();
-    const tokens = {
-      idToken: result.getIdToken().getJwtToken(),
-      accessToken: result.getAccessToken().getJwtToken(),
-      refreshtToken: result.getRefreshToken().getJwtToken(),
+    if (result) {
+      const tokens = {
+        idToken: result.getIdToken()?.getJwtToken(),
+        accessToken: result.getAccessToken()?.getJwtToken(),
+        refreshtToken: result.getRefreshToken()?.getToken(),
+      };
+      dispatch(updateTokens(tokens));
+    }
+  };
+
+  const startUp = async () => {
+    const getUserAttributes = async () => {
+      const user = await Auth.currentAuthenticatedUser();
+      if (user) {
+        dispatch(updateUserInfo(user.attributes));
+      }
+      return;
     };
-    dispatch(updateTokens(tokens));
+    const refreshPromise = refresh();
+    const getUserAttributesPromise = getUserAttributes();
+    await Promise.all([refreshPromise, getUserAttributesPromise]);
   };
 
   return {
@@ -74,6 +88,7 @@ const useAuthentication = () => {
     confirmSignUp,
     signIn,
     signOut,
+    startUp,
   };
 };
 
