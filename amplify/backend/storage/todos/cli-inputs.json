@@ -2,12 +2,12 @@
   "resourceName": "todos",
   "tableName": "todos",
   "partitionKey": {
-    "fieldName": "username",
+    "fieldName": "userId",
     "fieldType": "string"
   },
   "sortKey": {
     "fieldName": "id",
-    "fieldType": "number"
+    "fieldType": "string"
   },
   "gsi": [],
   "triggerFunctions": []

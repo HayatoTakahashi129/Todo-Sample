@@ -4,6 +4,7 @@ import Home from "../pages/Home/Home";
 import { Signin } from "../pages/Signin/Signin";
 import { SignupConfirm } from "../pages/Signup/Confirm/SignupConfirm";
 import { Signup } from "../pages/Signup/Signup";
+import Todo from "../pages/Todo/Todo";
 import AuthGuardRoute from "./AuthGuardRoute";
 
 const mainRoute = () => {
@@ -13,6 +14,7 @@ const mainRoute = () => {
       <Route path="/signup" element={<Signup />} />
       <Route path="/signup/confirm" element={<SignupConfirm />} />
       <Route path="/login" element={<Signin />} />
+      <Route path="/todo" element={<AuthGuardRoute component={<Todo />} />} />
     </Routes>
   );
 };

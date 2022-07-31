@@ -1,6 +1,4 @@
-const { formatToTimeZone } = require("date-fns-timezone");
-const STRING_FORMAT = "T"; // millisecond format
-const TIME_ZONE = "Asia/Tokyo";
+const logger = require("../Logger/Logger");
 
 exports.generateRandomNumberStr = (n) => {
   var CODE_TABLE = "0123456789";
@@ -22,10 +20,11 @@ exports.generateRandomId = (n) => {
 };
 
 exports.generateRandomTimeId = () => {
-  const randomId = this.generateRandomNumberStr(20);
+  const randomId = this.generateRandomNumberStr(17);
   const now = new Date();
-  const timestampString = formatToTimeZone(now, STRING_FORMAT, {
-    timeZone: TIME_ZONE,
-  });
-  return timestampString + randomId;
+  const timestampString = String(now.getTime());
+  const timeId = timestampString + randomId;
+
+  logger.debug("generated random time id :", timeId);
+  return timeId;
 };

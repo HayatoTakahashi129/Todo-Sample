@@ -2,6 +2,7 @@ const {
   ExecuteStatementCommand,
   BatchExecuteStatementCommand,
 } = require("@aws-sdk/client-dynamodb");
+const { marshall, unmarshall } = require("@aws-sdk/util-dynamodb");
 
 const ddbDocClient = require("./ddbDocClient");
 const logger = require("../Logger/Logger");
@@ -9,21 +10,26 @@ const { SystemException } = require("../Errors/Exceptions");
 
 const execute = async (statement, param) => {
   logger.debug("dynamoDB execute statement :", statement.split("\n"));
-  logger.debug("dynamoDB execute param :", param);
-
+  const convertedParam = param.map((item) => marshall(item));
   const parameters = {
     Statement: statement,
-    Parameters: param,
+    Parameters: convertedParam,
   };
+  logger.debug("dynamoDB execute param :", convertedParam);
 
   try {
     const data = await ddbDocClient.send(
       new ExecuteStatementCommand(parameters)
     );
     logger.debug("dynamoDB execute result :", data);
-    return data.Items;
+    if (data.Items) return data.Items.map((item) => unmarshall(item));
+    return;
   } catch (error) {
-    throw new SystemException(error);
+    throw new SystemException(
+      500,
+      error,
+      "Failed to execute dynamoDB statement"
+    );
   }
 };
 

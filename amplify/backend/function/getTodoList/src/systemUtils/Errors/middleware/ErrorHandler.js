@@ -12,18 +12,21 @@ const getTrackId = () => {
   return threadStorage.get("trackId");
 };
 
-const createSystemErrorMessage = () => {
+const createSystemErrorMessage = (error) => {
   const trackId = getTrackId();
   const messageTrackId = trackId.split("=")[1].slice(0, 10);
-  return "Something went wrong. " + messageTrackId;
+  return {
+    message: "Something went wrong. " + messageTrackId,
+    type: error.type,
+  };
 };
 
 const getBuisnessErrorResponse = (error) => {
-  let { displayMessage, status } = error;
+  let { displayMessage } = error;
   if (typeof displayMessage === "string")
-    displayMessage = { message: displayMessage };
+    displayMessage = { message: displayMessage, type: error.type };
 
-  return { message: displayMessage, status };
+  return { ...displayMessage, type: error.type };
 };
 
 exports.knownErrorHandler = (err, req, res, next) => {
@@ -32,16 +35,14 @@ exports.knownErrorHandler = (err, req, res, next) => {
   }
 
   if (err instanceof SystemException) {
-    logger.error(err);
     const { status } = err;
-    const message = createSystemErrorMessage();
+    const message = createSystemErrorMessage(err);
     res.status(status).json({ message });
     return res;
   }
   if (err instanceof BuisnessException) {
-    logger.info(err);
     const response = getBuisnessErrorResponse(err);
-    res.status(response.status).json(response.message);
+    res.status(err.status).json(response);
     return res;
   }
 

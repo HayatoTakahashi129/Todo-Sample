@@ -33,7 +33,7 @@
         },
         "getTodoList": {
           "deploymentBucketName": "amplify-cognitodemo-dev-01435-deployment",
-          "s3Key": "amplify-builds/getTodoList-4f397955372b6e575065-build.zip"
+          "s3Key": "amplify-builds/getTodoList-4f4e7575545635664b47-build.zip"
         }
       }
     }

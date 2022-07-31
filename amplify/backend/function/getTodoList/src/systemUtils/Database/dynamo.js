@@ -1,8 +1,4 @@
 const { execute } = require("./queryManager");
-const {
-  createConditionParams,
-  reshapeResult,
-} = require("./interfaceConverter");
 
 const ENV = process.env.ENV;
 
@@ -32,10 +28,30 @@ exports.selectDB = async (table, select, params) => {
   `;
 
   // I couldn't find the way to convert by library option.
-  const parameters = createConditionParams(params);
+  const parameters = Object.values(params);
 
   const queryResult = await execute(SQL, parameters);
-  const result = reshapeResult(queryResult);
 
-  return result;
+  return queryResult;
+};
+
+const createValueConditions = (valueKeys) => {
+  const keys = valueKeys.map((item) => `'${item}':? `);
+  const jsonKeys = `{ ${keys.join(",")} }`;
+  return jsonKeys;
+};
+
+exports.insert = async (table, values) => {
+  const value = createValueConditions(Object.keys(values));
+  const SQL = `
+  INSERT INTO
+    "${table}-${ENV}"
+  VALUE
+      ${value}
+    `;
+
+  const params = Object.values(values);
+  const queryResult = await execute(SQL, params);
+
+  return queryResult;
 };
