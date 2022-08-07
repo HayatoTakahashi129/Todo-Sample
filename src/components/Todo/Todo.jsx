@@ -1,5 +1,7 @@
 import * as React from "react";
+import { useSelector } from "react-redux";
 import useApi from "../../hooks/axios/useApi";
+import URI_CONST from "../../hooks/axios/constants/uiriConst";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -17,13 +19,9 @@ import { Container } from "@mui/material";
 
 const Todo = () => {
   const sendApi = useApi();
-  const [todoList, setTodoList] = React.useState([]);
+  const todoList = useSelector((state) => state.getApi[URI_CONST.getTodo.url]);
   React.useEffect(() => {
-    const fetchApi = async () => {
-      const todos = await sendApi({ method: "get", url: "/todos" });
-      setTodoList(todos);
-    };
-    fetchApi();
+    sendApi(URI_CONST.getTodo);
   }, []);
 
   return (

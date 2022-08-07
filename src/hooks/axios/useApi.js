@@ -1,13 +1,15 @@
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { updateData } from "../../store/slices/getApiSlice";
 import useAuthentication from "../useAuthentication";
 import axiosInstance from "./axiosInstance";
 
 const useApi = () => {
   const axios = axiosInstance();
   const auth = useAuthentication();
-  const idToken = useSelector((state) => state.user.idToken);
+  const dispatch = useDispatch();
 
-  const requestConfig = (config) => {
+  const requestConfig = async (config) => {
+    const idToken = await auth.getidToken();
     config.headers = {
       Authorization: `Bearer ${idToken}`,
       "content-type": "application/json",
@@ -44,8 +46,16 @@ const useApi = () => {
     }
   };
 
+  const responseSuccessHandler = (response) => {
+    if (response.config.method === "get") {
+      const responseData = { url: response.config.url, data: response.data };
+      dispatch(updateData(responseData));
+    }
+    return response;
+  };
+
   axios.interceptors.request.use(requestConfig);
-  axios.interceptors.response.use((config) => config, respnoseErrorHandler);
+  axios.interceptors.response.use(responseSuccessHandler, respnoseErrorHandler);
 
   const sendApi = async (config, data = undefined) => {
     const response = await axios.request({

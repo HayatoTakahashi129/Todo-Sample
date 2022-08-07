@@ -64,6 +64,8 @@ const useAuthentication = () => {
       result = await Auth.currentSession();
     } catch (error) {
       // no auth token.
+      console.log(error);
+
       dispatch(clear());
       return;
     }
@@ -71,7 +73,7 @@ const useAuthentication = () => {
       const tokens = {
         idToken: result.getIdToken()?.getJwtToken(),
         accessToken: result.getAccessToken()?.getJwtToken(),
-        refreshtToken: result.getRefreshToken()?.getToken(),
+        refreshToken: result.getRefreshToken()?.getToken(),
       };
       dispatch(updateTokens(tokens));
     }
@@ -85,6 +87,7 @@ const useAuthentication = () => {
       } catch (error) {
         // no user.
         dispatch(clear());
+        console.log("no user");
         return;
       }
       if (user) {
@@ -97,6 +100,17 @@ const useAuthentication = () => {
     await Promise.all([refreshPromise, getUserAttributesPromise]);
   };
 
+  const getidToken = async () => {
+    let idToken;
+    try {
+      const tokens = await Auth.currentSession();
+      idToken = tokens.getIdToken().getJwtToken();
+    } catch (error) {
+      console.log("error to get idToken");
+    }
+    return idToken;
+  };
+
   return {
     signUp,
     confirmSignUp,
@@ -104,6 +118,7 @@ const useAuthentication = () => {
     signOut,
     refresh,
     startUp,
+    getidToken,
   };
 };
 
