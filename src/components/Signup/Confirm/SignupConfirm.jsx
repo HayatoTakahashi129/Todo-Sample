@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { TextField, Stack } from "@mui/material";
 import { Container } from "@mui/system";
 import Typography from "@mui/material/Typography";
-import { SubmitButton } from "../../../components/common/SubmitButton/SubmitButton";
+import { SubmitButton } from "../../../common/SubmitButton/SubmitButton";
 import useAuthentication from "../../../hooks/useAuthentication";
 
 export const SignupConfirm = () => {

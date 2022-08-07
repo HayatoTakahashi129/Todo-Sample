@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { Stack, Box } from "@mui/material";
 import { Container } from "@mui/system";
 import { useForm } from "react-hook-form";
-import EmailInput from "../../components/Signup/inputs/EmailInput";
-import { PasswordInput } from "../../components/Signup/inputs/PasswordInput";
-import { SubmitButton } from "../../components/common/SubmitButton/SubmitButton";
+import EmailInput from "../../common/inputs/EmailInput";
+import { PasswordInput } from "../../common/inputs/PasswordInput";
+import { SubmitButton } from "../../common/SubmitButton/SubmitButton";
 import useAuthentication from "../../hooks/useAuthentication";
 
 const defaultFormValues = {

@@ -1,11 +1,11 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "../pages/Home/Home";
-import { Signin } from "../pages/Signin/Signin";
-import { SignupConfirm } from "../pages/Signup/Confirm/SignupConfirm";
-import { Signup } from "../pages/Signup/Signup";
-import { AddTodo } from "../pages/Todo/Add/AddTodo";
-import Todo from "../pages/Todo/Todo";
+import Home from "../components/Home/Home";
+import { Signin } from "../components/Signin/Signin";
+import { SignupConfirm } from "../components/Signup/Confirm/SignupConfirm";
+import { Signup } from "../components/Signup/Signup";
+import { AddTodo } from "../components/Todo/Add/AddTodo";
+import Todo from "../components/Todo/Todo";
 import AuthGuardRoute from "./AuthGuardRoute";
 
 const mainRoute = () => {

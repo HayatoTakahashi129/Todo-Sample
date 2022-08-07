@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { Container } from "@mui/system";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { SubmitButton } from "../../components/common/SubmitButton/SubmitButton";
-import EmailInput from "../../components/Signup/inputs/EmailInput";
-import { NicknameInput } from "../../components/Signup/inputs/NicknameInput";
-import { PasswordInput } from "../../components/Signup/inputs/PasswordInput";
-import { update } from "../../store/slices/signupSlice";
+import { SubmitButton } from "../../common/SubmitButton/SubmitButton";
+import EmailInput from "../../common/inputs/EmailInput";
+import { NicknameInput } from "../../common/inputs/NicknameInput";
+import { PasswordInput } from "../../common/inputs/PasswordInput";
+import { update } from "./store/signupSlice";
 import useAuthentication from "../../hooks/useAuthentication";
 
 const defaultFormValues = {

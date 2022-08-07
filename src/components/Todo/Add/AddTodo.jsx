@@ -3,7 +3,7 @@ import { Container } from "@mui/system";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { DateTimeInput } from "../../../common/DateTimeInput/DateTimeInput";
-import { SubmitButton } from "../../../components/common/SubmitButton/SubmitButton";
+import { SubmitButton } from "../../../common/SubmitButton/SubmitButton";
 import useApi from "../../../hooks/axios/useApi";
 
 const formValidations = {

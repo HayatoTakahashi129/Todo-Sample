@@ -20,6 +20,7 @@ const useApi = () => {
   };
   const error401Handler = async (error) => {
     await auth.refresh();
+    console.log(error);
     return axios.request(error.config);
   };
   const error500handler = (error) => {
