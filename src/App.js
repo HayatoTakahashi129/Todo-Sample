@@ -5,7 +5,7 @@ import HeaderMenu from "./common/HeaderMenu/HeaderMenu";
 import MainRoute from "./routes/MainRoute";
 import "./App.css";
 import useApi from "./hooks/axios/useApi";
-import URI_CONST from "./hooks/axios/constants/uiriConst";
+import URI_CONST from "./hooks/axios/constants/uriConst";
 
 const App = () => {
   const auth = useAuthentication();

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 import useApi from "../../hooks/axios/useApi";
-import URI_CONST from "../../hooks/axios/constants/uiriConst";
+import URI_CONST from "../../hooks/axios/constants/uriConst";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";

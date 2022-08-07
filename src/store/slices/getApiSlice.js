@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import URI_CONST from "../../hooks/axios/constants/uiriConst";
+import URI_CONST from "../../hooks/axios/constants/uriConst";
 
 /**
  * returns url Ojbect as {url : initialValue} for only get method.
