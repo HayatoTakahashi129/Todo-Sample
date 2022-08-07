@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { updateTokens, updateUserInfo } from "../store/slices/userSlice";
+import { updateTokens, updateUserInfo, clear } from "../store/slices/userSlice";
 import { Amplify, Auth } from "aws-amplify";
 import awsmobile from "../aws-exports";
 
@@ -59,7 +59,14 @@ const useAuthentication = () => {
   };
 
   const refresh = async () => {
-    const result = await Auth.currentSession();
+    let result;
+    try {
+      result = await Auth.currentSession();
+    } catch (error) {
+      // no auth token.
+      dispatch(clear());
+      return;
+    }
     if (result) {
       const tokens = {
         idToken: result.getIdToken()?.getJwtToken(),
@@ -72,7 +79,14 @@ const useAuthentication = () => {
 
   const startUp = async () => {
     const getUserAttributes = async () => {
-      const user = await Auth.currentAuthenticatedUser();
+      let user;
+      try {
+        user = await Auth.currentAuthenticatedUser();
+      } catch (error) {
+        // no user.
+        dispatch(clear());
+        return;
+      }
       if (user) {
         dispatch(updateUserInfo(user.attributes));
       }
@@ -88,6 +102,7 @@ const useAuthentication = () => {
     confirmSignUp,
     signIn,
     signOut,
+    refresh,
     startUp,
   };
 };

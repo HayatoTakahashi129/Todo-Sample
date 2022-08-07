@@ -4,7 +4,7 @@ import axiosInstance from "./axiosInstance";
 
 const useApi = () => {
   const axios = axiosInstance();
-  //   const auth = useAuthentication();
+  const auth = useAuthentication();
   const idToken = useSelector((state) => state.user.idToken);
 
   const requestConfig = (config) => {
@@ -15,24 +15,32 @@ const useApi = () => {
     return config;
   };
 
-  const error400handler = (error) => {};
-  const error500handler = (error) => {};
-  const errorDefaultHandler = (error) => {};
+  const error400handler = (error) => {
+    return error;
+  };
+  const error401Handler = async (error) => {
+    await auth.refresh();
+    return axios.request(error.config);
+  };
+  const error500handler = (error) => {
+    return error;
+  };
+  const errorDefaultHandler = (error) => {
+    return error;
+  };
 
   const respnoseErrorHandler = (error) => {
     console.log(error);
     switch (error.response.status) {
       case 400:
-        error400handler(error);
-        break;
+        return error400handler(error);
+      case 401:
+        return error401Handler(error);
       case 500:
-        error500handler(error);
-        break;
+        return error500handler(error);
       default:
-        errorDefaultHandler(error);
-        break;
+        return errorDefaultHandler(error);
     }
-    return error;
   };
 
   axios.interceptors.request.use(requestConfig);
