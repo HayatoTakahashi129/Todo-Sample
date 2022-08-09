@@ -1,21 +1,15 @@
 import { Stack, Box } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container } from "@mui/system";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { SubmitButton } from "../../components/common/SubmitButton/SubmitButton";
-import EmailInput from "../../components/Signup/inputs/EmailInput";
-import { NicknameInput } from "../../components/Signup/inputs/NicknameInput";
-import { PasswordInput } from "../../components/Signup/inputs/PasswordInput";
-import { update } from "../../store/slices/signupSlice";
+import { SubmitButton } from "../../common/SubmitButton/SubmitButton";
+import EmailInput from "../../common/inputs/EmailInput";
+import { NicknameInput } from "../../common/inputs/NicknameInput";
+import { PasswordInput } from "../../common/inputs/PasswordInput";
+import { updateInput } from "./store/signupSlice";
 import useAuthentication from "../../hooks/useAuthentication";
-
-const defaultFormValues = {
-  email: "",
-  nickname: "",
-  password: "",
-};
 
 const formValidations = {
   email: {
@@ -41,6 +35,7 @@ const formValidations = {
 export const Signup = () => {
   const auth = useAuthentication();
   const navigate = useNavigate();
+  const inputValues = useSelector((state) => state.signup);
   const dispatch = useDispatch();
 
   const {
@@ -49,14 +44,14 @@ export const Signup = () => {
     formState: { errors },
   } = useForm({
     mode: "onSubmit",
-    defaultValues: defaultFormValues,
+    defaultValues: inputValues,
   });
 
   const submitHandler = handleSubmit(async (data) => {
     try {
       await auth.signUp(data.email, data.nickname, data.password);
 
-      dispatch(update(data));
+      dispatch(updateInput(data));
       navigate("/signup/confirm");
     } catch (error) {
       console.log(error);

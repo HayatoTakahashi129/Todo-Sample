@@ -1,13 +1,15 @@
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { updateData } from "../../store/slices/getApiSlice";
 import useAuthentication from "../useAuthentication";
 import axiosInstance from "./axiosInstance";
 
 const useApi = () => {
   const axios = axiosInstance();
-  //   const auth = useAuthentication();
-  const idToken = useSelector((state) => state.user.idToken);
+  const auth = useAuthentication();
+  const dispatch = useDispatch();
 
-  const requestConfig = (config) => {
+  const requestConfig = async (config) => {
+    const idToken = await auth.getidToken();
     config.headers = {
       Authorization: `Bearer ${idToken}`,
       "content-type": "application/json",
@@ -15,28 +17,45 @@ const useApi = () => {
     return config;
   };
 
-  const error400handler = (error) => {};
-  const error500handler = (error) => {};
-  const errorDefaultHandler = (error) => {};
+  const error400handler = (error) => {
+    return error;
+  };
+  const error401Handler = async (error) => {
+    await auth.refresh();
+    console.log(error);
+    return axios.request(error.config);
+  };
+  const error500handler = (error) => {
+    return error;
+  };
+  const errorDefaultHandler = (error) => {
+    return error;
+  };
 
   const respnoseErrorHandler = (error) => {
     console.log(error);
     switch (error.response.status) {
       case 400:
-        error400handler(error);
-        break;
+        return error400handler(error);
+      case 401:
+        return error401Handler(error);
       case 500:
-        error500handler(error);
-        break;
+        return error500handler(error);
       default:
-        errorDefaultHandler(error);
-        break;
+        return errorDefaultHandler(error);
     }
-    return error;
+  };
+
+  const responseSuccessHandler = (response) => {
+    if (response.config.method === "get") {
+      const responseData = { url: response.config.url, data: response.data };
+      dispatch(updateData(responseData));
+    }
+    return response;
   };
 
   axios.interceptors.request.use(requestConfig);
-  axios.interceptors.response.use((config) => config, respnoseErrorHandler);
+  axios.interceptors.response.use(responseSuccessHandler, respnoseErrorHandler);
 
   const sendApi = async (config, data = undefined) => {
     const response = await axios.request({

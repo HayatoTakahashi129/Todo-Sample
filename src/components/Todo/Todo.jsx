@@ -1,5 +1,5 @@
 import * as React from "react";
-import useApi from "../../hooks/axios/useApi";
+import URI_CONST from "../../hooks/axios/constants/uriConst";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -14,17 +14,10 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Container } from "@mui/material";
+import useGetApiResource from "../../hooks/useGetApiResource";
 
 const Todo = () => {
-  const sendApi = useApi();
-  const [todoList, setTodoList] = React.useState([]);
-  React.useEffect(() => {
-    const fetchApi = async () => {
-      const todos = await sendApi({ method: "get", url: "/todos" });
-      setTodoList(todos);
-    };
-    fetchApi();
-  }, []);
+  const todoList = useGetApiResource(URI_CONST.getTodo);
 
   return (
     <Container>

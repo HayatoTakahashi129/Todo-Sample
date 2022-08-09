@@ -1,15 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { clearInput } from "../store/signupSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { TextField, Stack } from "@mui/material";
 import { Container } from "@mui/system";
 import Typography from "@mui/material/Typography";
-import { SubmitButton } from "../../../components/common/SubmitButton/SubmitButton";
+import { SubmitButton } from "../../../common/SubmitButton/SubmitButton";
 import useAuthentication from "../../../hooks/useAuthentication";
 
 export const SignupConfirm = () => {
   const userEmail = useSelector((state) => state.signup.email);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = useAuthentication();
 
@@ -27,6 +29,7 @@ export const SignupConfirm = () => {
   const submitHandler = handleSubmit(async (data) => {
     try {
       await auth.confirmSignUp(userEmail, data.code);
+      dispatch(clearInput());
       navigate("/");
     } catch (error) {
       console.log(error);

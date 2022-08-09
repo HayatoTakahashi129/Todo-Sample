@@ -1,8 +1,8 @@
 import { Stack } from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
-import { HomePageLinks } from "../../components/Home/HomePageLinks/HomePageLinks";
-import { Welcome } from "../../components/Home/Welcome/Welcome";
+import { HomePageLinks } from "./components/HomePageLinks/HomePageLinks";
+import { Welcome } from "./components/Welcome/Welcome";
 
 const Home = () => {
   return (
