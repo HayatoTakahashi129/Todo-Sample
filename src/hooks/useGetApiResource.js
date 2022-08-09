@@ -4,7 +4,7 @@ import useApi from "./axios/useApi";
 
 const useGetApiResource = (apiConfig) => {
   const sendApi = useApi();
-  const getResource = useSelector((state) => state.apiConfig.url);
+  const getResource = useSelector((state) => state.getApi[apiConfig.url]);
 
   useEffect(() => {
     sendApi(apiConfig);
