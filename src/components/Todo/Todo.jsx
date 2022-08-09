@@ -1,6 +1,4 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
-import useApi from "../../hooks/axios/useApi";
 import URI_CONST from "../../hooks/axios/constants/uriConst";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
@@ -16,13 +14,10 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Container } from "@mui/material";
+import useGetApiResource from "../../hooks/useGetApiResource";
 
 const Todo = () => {
-  const sendApi = useApi();
-  const todoList = useSelector((state) => state.getApi[URI_CONST.getTodo.url]);
-  React.useEffect(() => {
-    sendApi(URI_CONST.getTodo);
-  }, []);
+  const todoList = useGetApiResource(URI_CONST.getTodo);
 
   return (
     <Container>
