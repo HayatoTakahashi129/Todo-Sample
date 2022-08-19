@@ -18,7 +18,7 @@ export type AmplifyDependentResourcesAttributes = {
             "LambdaExecutionRole": "string",
             "Region": "string"
         },
-        "getTodoList": {
+        "sampleTodoApiTodo": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",
