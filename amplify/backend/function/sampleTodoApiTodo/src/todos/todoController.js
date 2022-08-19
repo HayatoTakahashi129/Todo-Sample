@@ -9,7 +9,7 @@ const router = Router();
  * HTTP Get method for list objects *
  ********************************/
 
-router.get("/todos", async (req, res) => {
+router.get("/todo", async (req, res) => {
   // no need to validate.
   const todoList = await getTodoList();
   res.status(200);
@@ -26,7 +26,7 @@ const schema = {
   required: ["title", "dueDate"],
 };
 
-router.post("/todo/add", validatorMiddleware(schema), async (req, res) => {
+router.post("/todo", validatorMiddleware(schema), async (req, res) => {
   const todo = req.body;
   await addTodo(todo);
 
@@ -35,5 +35,3 @@ router.post("/todo/add", validatorMiddleware(schema), async (req, res) => {
 });
 
 module.exports = router;
-
-
