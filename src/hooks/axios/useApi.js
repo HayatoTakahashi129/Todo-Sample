@@ -48,11 +48,12 @@ const useApi = () => {
   };
 
   const responseSuccessHandler = (response) => {
+    if (!hasGetMethod(response.config.url)) return response; // do nothing whene api don't have GET method.
+
     if (response.config.method === "get") {
       const responseData = { url: response.config.url, data: response.data };
       dispatch(updateData(responseData));
     } else if (response.config.method === "post") {
-      if (!hasGetMethod(response.config.url)) return response; // do nothing.
       const insert_value = response.data.result;
       dispatch(addData({ url: response.config.url, data: insert_value }));
     }
