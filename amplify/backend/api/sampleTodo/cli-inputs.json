@@ -1,9 +1,9 @@
 {
   "version": 1,
   "paths": {
-    "/todos": {
-      "name": "/todos",
-      "lambdaFunction": "getTodoList",
+    "/todo": {
+      "name": "/todo",
+      "lambdaFunction": "sampleTodoApiTodo",
       "permissions": {
         "setting": "private",
         "auth": [
@@ -14,9 +14,9 @@
         ]
       }
     },
-    "/todo": {
-      "name": "/todo",
-      "lambdaFunction": "getTodoList",
+    "/todos": {
+      "name": "/todos",
+      "lambdaFunction": "sampleTodoApiTodo",
       "permissions": {
         "setting": "private",
         "auth": [
@@ -29,32 +29,11 @@
     },
     "/todo/add": {
       "name": "/todo/add",
-      "lambdaFunction": "getTodoList",
+      "lambdaFunction": "sampleTodoApiTodo",
       "permissions": {
         "setting": "private",
         "auth": [
           "create"
-        ]
-      }
-    },
-    "/todo/edit": {
-      "name": "/todo/edit",
-      "lambdaFunction": "getTodoList",
-      "permissions": {
-        "setting": "private",
-        "auth": [
-          "read",
-          "update"
-        ]
-      }
-    },
-    "/todo/delete": {
-      "name": "/todo/delete",
-      "lambdaFunction": "getTodoList",
-      "permissions": {
-        "setting": "private",
-        "auth": [
-          "delete"
         ]
       }
     }

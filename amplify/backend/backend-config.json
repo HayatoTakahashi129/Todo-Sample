@@ -15,7 +15,7 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "getTodoList": {
+    "sampleTodoApiTodo": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
@@ -25,9 +25,12 @@
           "resourceName": "todos",
           "attributes": [
             "Name",
-            "Arn",
-            "StreamArn"
-          ]
+            "Arn"
+          ],
+          "attributeEnvMap": {
+            "Name": "TABLE_NAME",
+            "Arn": "TABLE_ARN"
+          }
         }
       ]
     }
@@ -73,7 +76,7 @@
       "dependsOn": [
         {
           "category": "function",
-          "resourceName": "getTodoList",
+          "resourceName": "sampleTodoApiTodo",
           "attributes": [
             "Name",
             "Arn"
