@@ -28,10 +28,10 @@ const schema = {
 
 router.post("/todo", validatorMiddleware(schema), async (req, res) => {
   const todo = req.body;
-  await addTodo(todo);
+  const result = await addTodo(todo);
 
   res.status(200);
-  res.json({ message: "add new Todo completedly." });
+  res.json({ message: "add new Todo completedly.", result });
 });
 
 module.exports = router;

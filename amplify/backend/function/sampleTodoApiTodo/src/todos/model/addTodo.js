@@ -21,6 +21,6 @@ exports.addTodo = async (todo) => {
   };
 
   logger.debug("start insert todo", values);
-  const result = await insert(TABLE, values);
-  return result;
+  await insert(TABLE, values);
+  return values;
 };
