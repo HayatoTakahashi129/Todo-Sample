@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { DateTimeInput } from "../../../common/DateTimeInput/DateTimeInput";
 import { SubmitButton } from "../../../common/SubmitButton/SubmitButton";
 import useApi from "../../../hooks/axios/useApi";
+import URI_CONST from "../../../hooks/axios/constants/uriConst";
 
 const formValidations = {
   title: {
@@ -44,7 +45,7 @@ export const AddTodo = () => {
 
   const submitHandler = handleSubmit(async (data) => {
     console.log("data", data);
-    const result = await sendApi({ method: "post", url: "/todo/add" }, data);
+    await sendApi(URI_CONST.postTodo, data);
   });
 
   return (

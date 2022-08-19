@@ -1,7 +1,8 @@
 import { useDispatch } from "react-redux";
-import { updateData } from "../../store/slices/getApiSlice";
+import { updateData, addData } from "../../store/slices/getApiSlice";
 import useAuthentication from "../useAuthentication";
 import axiosInstance from "./axiosInstance";
+import { hasGetMethod } from "./constants/uriConst";
 
 const useApi = () => {
   const axios = axiosInstance();
@@ -47,10 +48,22 @@ const useApi = () => {
   };
 
   const responseSuccessHandler = (response) => {
-    if (response.config.method === "get") {
-      const responseData = { url: response.config.url, data: response.data };
-      dispatch(updateData(responseData));
+    if (!hasGetMethod(response.config.url)) return response; // do nothing whene api don't have GET method.
+
+    const responseData = {
+      url: response.config.url,
+      data: response.data.result,
+    };
+    switch (response.config.method) {
+      case "get":
+        dispatch(updateData(responseData));
+        break;
+      case "post":
+        dispatch(addData(responseData));
+        break;
+      default:
     }
+
     return response;
   };
 

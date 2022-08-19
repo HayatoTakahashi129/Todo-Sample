@@ -28,8 +28,17 @@ export const getApiSlice = createSlice({
     updateData: (state, action) => {
       state[action.payload.url] = action.payload.data;
     },
+    addData: (state, action) => {
+      const targetState = state[action.payload.url];
+      if (Array.isArray(targetState)) {
+        // add target data in last of array.
+        state[action.payload.url].push(action.payload.data);
+      } else {
+        state[action.payload.url] = action.payload.data;
+      }
+    },
   },
 });
 
-export const { updateData } = getApiSlice.actions;
+export const { updateData, addData } = getApiSlice.actions;
 export default getApiSlice.reducer;

@@ -12,7 +12,8 @@ exports.getTodoList = async () => {
 
 exports.addTodo = async (todo) => {
   try {
-    await addTodo(todo);
+    const insert_values = await addTodo(todo);
+    return insert_values;
   } catch (error) {
     throw new SystemException(500, error, ["Failed to insert todo", todo]);
   }
