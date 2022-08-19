@@ -13,7 +13,7 @@ router.get("/todo", async (req, res) => {
   // no need to validate.
   const todoList = await getTodoList();
   res.status(200);
-  res.json(todoList);
+  res.json({ message: "api execution succeed.", result: todoList });
 });
 
 const schema = {
