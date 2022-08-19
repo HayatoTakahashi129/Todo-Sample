@@ -1,8 +1,12 @@
 const URI_CONST = {
   getTodo: {
-    url: "/todos",
+    url: "/todo",
     method: "get",
     initialReturnValue: [],
+  },
+  postTodo: {
+    url: "/todo",
+    method: "post",
   },
 };
 
