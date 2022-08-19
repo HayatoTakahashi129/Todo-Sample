@@ -45,7 +45,7 @@ export const AddTodo = () => {
 
   const submitHandler = handleSubmit(async (data) => {
     console.log("data", data);
-    const result = await sendApi(URI_CONST.postTodo, data);
+    await sendApi(URI_CONST.postTodo, data);
   });
 
   return (

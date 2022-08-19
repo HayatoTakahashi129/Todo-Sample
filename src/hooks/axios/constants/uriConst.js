@@ -10,4 +10,11 @@ const URI_CONST = {
   },
 };
 
+export const hasGetMethod = (url) => {
+  const resource = Object.entries(URI_CONST).find(
+    ([key, value]) => value.method === "get" && value.url === url
+  );
+  return Boolean(resource);
+};
+
 export default URI_CONST;

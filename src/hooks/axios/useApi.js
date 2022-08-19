@@ -1,7 +1,8 @@
 import { useDispatch } from "react-redux";
-import { updateData } from "../../store/slices/getApiSlice";
+import { updateData, addData } from "../../store/slices/getApiSlice";
 import useAuthentication from "../useAuthentication";
 import axiosInstance from "./axiosInstance";
+import { hasGetMethod } from "./constants/uriConst";
 
 const useApi = () => {
   const axios = axiosInstance();
@@ -50,6 +51,10 @@ const useApi = () => {
     if (response.config.method === "get") {
       const responseData = { url: response.config.url, data: response.data };
       dispatch(updateData(responseData));
+    } else if (response.config.method === "post") {
+      if (!hasGetMethod(response.config.url)) return response; // do nothing.
+      const insert_value = response.data.result;
+      dispatch(addData({ url: response.config.url, data: insert_value }));
     }
     return response;
   };
