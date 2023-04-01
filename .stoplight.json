@@ -1,0 +1,23 @@
+{
+  "exclude": [],
+  "formats": {
+    "openapi": {
+      "rootDir": "amplify/backend/api/sampleTodo",
+      "include": [
+        "**"
+      ]
+    },
+    "json_schema": {
+      "rootDir": "amplify/backend/api/sampleTodo/models",
+      "include": [
+        "**"
+      ]
+    },
+    "markdown": {
+      "rootDir": "amplify/backend/api/sampleTodo/docs"
+    },
+    "image": {
+      "rootDir": "amplify/backend/api/sampleTodo/assets/images"
+    }
+  }
+}

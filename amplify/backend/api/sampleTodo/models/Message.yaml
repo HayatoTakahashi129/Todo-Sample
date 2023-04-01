@@ -1,0 +1,24 @@
+title: Message
+x-stoplight:
+  id: o7rfjkgrbhqcz
+type: object
+description: ユーザに伝えるためのメッセージを格納するモデル
+properties:
+  type:
+    type: string
+    x-stoplight:
+      id: debgkicz2jfm9
+    enum:
+      - success
+      - failure
+    example: success
+  message:
+    type: string
+    x-stoplight:
+      id: a6u726zs9ny1l
+    minLength: 1
+    maxLength: 256
+    example: TODOの作成に成功しました。
+required:
+  - type
+  - message

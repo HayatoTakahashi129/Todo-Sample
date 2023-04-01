@@ -1,0 +1,282 @@
+openapi: 3.0.0
+x-stoplight:
+  id: swtfnrmy4o30q
+info:
+  title: TodoSample
+  version: '1.0'
+  description: |-
+    TODOリストを管理するアプリのためのサンプル用OpenAPI
+    認証機能はCongitoを利用するToken認証方式
+  contact:
+    name: Hayato Takahashi
+    url: 'https://github.com/HayatoTakahashi129'
+    email: hayato.012995@gmail.com
+  license:
+    name: MIT
+    url: 'https://choosealicense.com/licenses/mit/'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /todos:
+    get:
+      summary: TODOリスト取得
+      tags: []
+      responses:
+        '200':
+          description: TODOリスト取得成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    x-stoplight:
+                      id: laopnxfqpoied
+                    type: array
+                    items:
+                      x-stoplight:
+                        id: fls1knnd5t7rr
+                      allOf:
+                        - $ref: ./models/ID.yaml
+                          x-stoplight:
+                            id: 48xge8sle0slz
+                        - $ref: '#/components/schemas/Todo'
+                          x-stoplight:
+                            id: rkg43xolzcc99
+                required:
+                  - data
+              examples:
+                登録されているTODOがない場合:
+                  value:
+                    data: []
+                TODOリストが登録済みの場合（２件）:
+                  value:
+                    data:
+                      - id: '165923165886004186925843853365'
+                        title: ごみを出す
+                        dueDate: '2022-07-07T08:00:00+09:00'
+                        description: 次の火曜日に朝８時までにごみを出す
+                      - id: '165923165886004186925843853368'
+                        title: ごみを出す2
+                        dueDate: '2022-07-09T08:00:00+09:00'
+                        description: 次の木曜日に朝８時までにごみを出す
+      operationId: get-todos
+      description: |
+        TODOリストの一覧を配列形式で取得する。  
+      security:
+        - ID-Token: []
+      requestBody:
+        content: {}
+    post:
+      summary: TODO追加
+      operationId: post-todos
+      responses:
+        '200':
+          description: TODOの新規登録に成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    $ref: ./models/Message.yaml
+                    x-stoplight:
+                      id: k2c0oj7z62g69
+                  data:
+                    x-stoplight:
+                      id: r6eyvt4papimy
+                    allOf:
+                      - $ref: ./models/ID.yaml
+                        x-stoplight:
+                          id: gruru0tw6ypna
+                      - $ref: '#/components/schemas/Todo'
+                        x-stoplight:
+                          id: p9hvhjzlq87ls
+                required:
+                  - message
+                  - data
+              examples:
+                TODO登録成功:
+                  value:
+                    message:
+                      type: success
+                      message: TODOの作成に成功しました。
+                    data:
+                      id: '165923165886004186925843853365'
+                      title: ごみを出す
+                      dueDate: '2022-07-07T03:00:00+09:00'
+                      description: 次の火曜日に朝８時までにごみを出す
+      description: TODOを新たに登録する
+      security:
+        - ID-Token: []
+  '/todos/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: TODOの識別用ID
+    get:
+      summary: TODO詳細情報取得
+      tags: []
+      responses:
+        '200':
+          description: TODO詳細情報取得成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    x-stoplight:
+                      id: b83jq8bluoen7
+                    allOf:
+                      - $ref: ./models/ID.yaml
+                        x-stoplight:
+                          id: iiemm9mk7apd7
+                      - $ref: '#/components/schemas/Todo'
+                        x-stoplight:
+                          id: 3eb8pc2v6gkcv
+                required:
+                  - data
+              examples:
+                情報取得成功:
+                  value:
+                    data:
+                      id: '165923165886004186925843853365'
+                      title: ごみを出す
+                      dueDate: '2022-07-07T03:00:00+09:00'
+                      description: 次の火曜日に朝８時までにごみを出す
+      operationId: get-todos-id
+      description: TODOの詳細情報を取得
+      security:
+        - ID-Token: []
+    put:
+      summary: TODO詳細情報更新
+      operationId: put-todos-id
+      responses:
+        '200':
+          description: TODOの詳細情報更新成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    $ref: ./models/Message.yaml
+                    x-stoplight:
+                      id: coemie9o6rhnj
+                  data:
+                    x-stoplight:
+                      id: n78hmnge76xos
+                    allOf:
+                      - $ref: ./models/ID.yaml
+                        x-stoplight:
+                          id: irkwsab3s9pwo
+                      - $ref: '#/components/schemas/Todo'
+                        x-stoplight:
+                          id: 426czg5iza98e
+                required:
+                  - message
+                  - data
+              examples:
+                TODOの更新に成功:
+                  value:
+                    message:
+                      type: success
+                      message: TODOの更新に成功しました。
+                    data:
+                      id: '165923165886004186925843853365'
+                      title: ごみを出す
+                      dueDate: '2022-07-07T03:00:00+09:00'
+                      description: 次の木曜日に朝８時までにごみを出す
+      description: TODOの詳細情報を更新する
+      security:
+        - ID-Token: []
+    delete:
+      summary: TODO削除
+      operationId: delete-todos-id
+      responses:
+        '200':
+          description: TODOの削除に成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    $ref: ./models/Message.yaml
+                    x-stoplight:
+                      id: y9n942sq5xprr
+                  data:
+                    x-stoplight:
+                      id: jeh7oajm6oted
+                    allOf:
+                      - $ref: ./models/ID.yaml
+                        x-stoplight:
+                          id: 433wlieyesin1
+                      - $ref: '#/components/schemas/Todo'
+                        x-stoplight:
+                          id: eqal3ti8dli45
+                required:
+                  - message
+                  - data
+              examples:
+                TODO削除成功:
+                  value:
+                    message:
+                      type: success
+                      message: TODOの削除に成功しました。
+                    data:
+                      id: '165923165886004186925843853365'
+                      title: ごみを出す
+                      dueDate: '2022-07-07T03:00:00+09:00'
+                      description: 次の火曜日に朝８時までにごみを出す
+      description: TODOを削除する。
+      security:
+        - ID-Token: []
+components:
+  schemas:
+    Todo:
+      title: Todo
+      x-stoplight:
+        id: j8z2lroq15ue4
+      type: object
+      description: TODO情報を管理するモデル
+      properties:
+        title:
+          type: string
+          x-stoplight:
+            id: je500wvzehsfs
+          description: タイトル
+          example: ごみを出す
+          minLength: 1
+          maxLength: 128
+        dueDate:
+          type: string
+          x-stoplight:
+            id: 1lij2dp6rn7ib
+          format: date-time
+          description: 達成期限
+          example: '2022-07-07T03:00:00+09:00'
+          minLength: 25
+          maxLength: 25
+        description:
+          type: string
+          x-stoplight:
+            id: 23py9cgxkgtq9
+          description: 詳細情報
+          example: 次の火曜日に朝８時までにごみを出す
+          minLength: 0
+          maxLength: 1024
+      required:
+        - title
+        - dueDate
+  securitySchemes:
+    ID-Token:
+      name: Authorization
+      type: apiKey
+      in: header
+security:
+  - ID-Token: []
