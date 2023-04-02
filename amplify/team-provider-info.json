@@ -35,6 +35,9 @@
           "deploymentBucketName": "amplify-cognitodemo-dev-01435-deployment",
           "s3Key": "amplify-builds/sampleTodoApiTodo-52336546474a7a344f38-build.zip"
         }
+      },
+      "storage": {
+        "todos": {}
       }
     }
   }
