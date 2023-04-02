@@ -1,0 +1,13 @@
+title: TooManyRequestErrorResponse
+x-stoplight:
+  id: ebi88iq2rtk41
+allOf:
+  - $ref: ../Message.yaml
+  - $ref: ../Error.yaml
+    x-stoplight:
+      id: y267q6njgkzx6
+description: サービスへのアクセスが込み合っているときのエラーレスポンス
+examples:
+  - error:
+      type: validation
+      detail: '${name}欄の入力は必須になります。'

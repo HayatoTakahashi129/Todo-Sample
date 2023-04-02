@@ -60,6 +60,16 @@ paths:
                         title: ごみを出す2
                         dueDate: '2022-07-09T08:00:00+09:00'
                         description: 次の木曜日に朝８時までにごみを出す
+        '401':
+          $ref: '#/components/responses/NotAuthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequestError'
+        '500':
+          $ref: '#/components/responses/SystemError'
+        '503':
+          $ref: '#/components/responses/SystemBlockage'
+        '504':
+          $ref: '#/components/responses/TimeoutError'
       operationId: get-todos
       description: |
         TODOリストの一覧を配列形式で取得する。  
@@ -76,39 +86,79 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    $ref: ./models/Message.yaml
+                allOf:
+                  - $ref: ./models/Message.yaml
                     x-stoplight:
-                      id: k2c0oj7z62g69
-                  data:
-                    x-stoplight:
-                      id: r6eyvt4papimy
-                    allOf:
-                      - $ref: ./models/ID.yaml
+                      id: 2qns5fryxx4b9
+                  - type: object
+                    properties:
+                      data:
                         x-stoplight:
-                          id: gruru0tw6ypna
-                      - $ref: '#/components/schemas/Todo'
-                        x-stoplight:
-                          id: p9hvhjzlq87ls
-                required:
-                  - message
-                  - data
+                          id: r6eyvt4papimy
+                        allOf:
+                          - $ref: ./models/ID.yaml
+                            x-stoplight:
+                              id: gruru0tw6ypna
+                          - $ref: '#/components/schemas/Todo'
+                            x-stoplight:
+                              id: p9hvhjzlq87ls
+                    required:
+                      - data
               examples:
                 TODO登録成功:
                   value:
                     message:
                       type: success
-                      message: TODOの作成に成功しました。
+                      display: TODOの作成に成功しました。
                     data:
                       id: '165923165886004186925843853365'
                       title: ごみを出す
                       dueDate: '2022-07-07T03:00:00+09:00'
                       description: 次の火曜日に朝８時までにごみを出す
+        '400':
+          description: 業務エラー発生
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: ./models/Message.yaml
+                  - $ref: ./models/Error.yaml
+                    x-stoplight:
+                      id: xpfus3li8001o
+              examples:
+                バリデーションエラー:
+                  value:
+                    message:
+                      type: failure
+                      display: |-
+                        入力内容に誤りがあります。
+                        再度ご確認の上実施をお願いいたします。
+                    error:
+                      type: validation
+                      detail: '${name}欄の入力は必須になります。'
+        '401':
+          $ref: '#/components/responses/NotAuthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequestError'
+        '500':
+          $ref: '#/components/responses/SystemError'
+        '503':
+          $ref: '#/components/responses/SystemBlockage'
+        '504':
+          $ref: '#/components/responses/TimeoutError'
       description: TODOを新たに登録する
       security:
         - ID-Token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/Todo'
+                  x-stoplight:
+                    id: z7oyxqmt6xk8w
   '/todos/{id}':
     parameters:
       - schema:
@@ -148,6 +198,29 @@ paths:
                       title: ごみを出す
                       dueDate: '2022-07-07T03:00:00+09:00'
                       description: 次の火曜日に朝８時までにごみを出す
+        '400':
+          description: 業務エラー発生
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: ./models/Message.yaml
+                  - $ref: ./models/Error.yaml
+                    x-stoplight:
+                      id: uh4me35n9bgx1
+              examples:
+                存在しないIDを指定した場合:
+                  $ref: '#/components/examples/NotExistIdError'
+        '401':
+          $ref: '#/components/responses/NotAuthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequestError'
+        '500':
+          $ref: '#/components/responses/SystemError'
+        '503':
+          $ref: '#/components/responses/SystemBlockage'
+        '504':
+          $ref: '#/components/responses/TimeoutError'
       operationId: get-todos-id
       description: TODOの詳細情報を取得
       security:
@@ -161,39 +234,72 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    $ref: ./models/Message.yaml
+                allOf:
+                  - $ref: ./models/Message.yaml
                     x-stoplight:
-                      id: coemie9o6rhnj
-                  data:
-                    x-stoplight:
-                      id: n78hmnge76xos
-                    allOf:
-                      - $ref: ./models/ID.yaml
+                      id: n3axv5jul4rb5
+                  - type: object
+                    properties:
+                      data:
                         x-stoplight:
-                          id: irkwsab3s9pwo
-                      - $ref: '#/components/schemas/Todo'
-                        x-stoplight:
-                          id: 426czg5iza98e
-                required:
-                  - message
-                  - data
+                          id: n78hmnge76xos
+                        allOf:
+                          - $ref: ./models/ID.yaml
+                            x-stoplight:
+                              id: irkwsab3s9pwo
+                          - $ref: '#/components/schemas/Todo'
+                            x-stoplight:
+                              id: 426czg5iza98e
+                    required:
+                      - data
               examples:
                 TODOの更新に成功:
                   value:
                     message:
                       type: success
-                      message: TODOの更新に成功しました。
+                      display: TODOの更新に成功しました。
                     data:
                       id: '165923165886004186925843853365'
                       title: ごみを出す
                       dueDate: '2022-07-07T03:00:00+09:00'
                       description: 次の木曜日に朝８時までにごみを出す
+        '400':
+          description: 業務エラー発生
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: ./models/Message.yaml
+                  - $ref: ./models/Error.yaml
+                    x-stoplight:
+                      id: 06tbilqp2fkbj
+              examples:
+                存在しないIDを指定した場合:
+                  $ref: '#/components/examples/NotExistIdError'
+        '401':
+          $ref: '#/components/responses/NotAuthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequestError'
+        '500':
+          $ref: '#/components/responses/SystemError'
+        '503':
+          $ref: '#/components/responses/SystemBlockage'
+        '504':
+          $ref: '#/components/responses/TimeoutError'
       description: TODOの詳細情報を更新する
       security:
         - ID-Token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/Todo'
+                  x-stoplight:
+                    id: c3j6pkiyq8rhj
+        description: ''
     delete:
       summary: TODO削除
       operationId: delete-todos-id
@@ -203,36 +309,58 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    $ref: ./models/Message.yaml
+                allOf:
+                  - $ref: ./models/Message.yaml
                     x-stoplight:
-                      id: y9n942sq5xprr
-                  data:
-                    x-stoplight:
-                      id: jeh7oajm6oted
-                    allOf:
-                      - $ref: ./models/ID.yaml
+                      id: e5uvd896qvikw
+                  - type: object
+                    properties:
+                      data:
                         x-stoplight:
-                          id: 433wlieyesin1
-                      - $ref: '#/components/schemas/Todo'
-                        x-stoplight:
-                          id: eqal3ti8dli45
-                required:
-                  - message
-                  - data
+                          id: jeh7oajm6oted
+                        allOf:
+                          - $ref: '#/components/schemas/Todo'
+                            x-stoplight:
+                              id: eqal3ti8dli45
+                          - $ref: ./models/ID.yaml
+                            x-stoplight:
+                              id: 433wlieyesin1
+                    required:
+                      - data
               examples:
                 TODO削除成功:
                   value:
                     message:
                       type: success
-                      message: TODOの削除に成功しました。
+                      display: TODOの削除に成功しました。
                     data:
                       id: '165923165886004186925843853365'
                       title: ごみを出す
                       dueDate: '2022-07-07T03:00:00+09:00'
                       description: 次の火曜日に朝８時までにごみを出す
+        '400':
+          description: 業務エラー発生
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: ./models/Message.yaml
+                  - $ref: ./models/Error.yaml
+                    x-stoplight:
+                      id: wubg0vyg4y1ad
+              examples:
+                存在しないIDを指定した場合:
+                  $ref: '#/components/examples/NotExistIdError'
+        '401':
+          $ref: '#/components/responses/NotAuthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequestError'
+        '500':
+          $ref: '#/components/responses/SystemError'
+        '503':
+          $ref: '#/components/responses/SystemBlockage'
+        '504':
+          $ref: '#/components/responses/TimeoutError'
       description: TODOを削除する。
       security:
         - ID-Token: []
@@ -278,5 +406,109 @@ components:
       name: Authorization
       type: apiKey
       in: header
+  responses:
+    NotAuthorized:
+      description: 未ログイン状態・トークンの有効期限切れ状態でのAPIリクエストが実施されたときに返却されるレスポンス
+      content:
+        application/json:
+          schema:
+            $ref: ./models/Response/NotAuthorizedResponse.yaml
+          examples:
+            未認証エラー:
+              value:
+                error:
+                  type: system
+                  detail: 未認証状態によるAPI打鍵エラー
+    SystemBlockage:
+      description: システム閉塞時のエラーレスポンス
+      content:
+        application/json:
+          schema:
+            $ref: ./models/Response/SystemBlockageResponse.yaml
+          examples:
+            システム閉塞メッセージ:
+              value:
+                message:
+                  type: modal
+                  display: |-
+                    以下の時間帯で現在システムの使用ができません。
+                      2023年3月1日 12:00 ~ 2023年3月1日 15:00
+                    お手数ですが、上記時間外で再度ログインを実施いただくようお願いいたします。
+                error:
+                  type: system
+                  detail: システム閉塞の実施期間中によるエラー
+    SystemError:
+      description: バックエンド側で想定外のシステムエラーが発生した時に表示されるエラーレスポンス
+      content:
+        application/json:
+          schema:
+            $ref: ./models/Response/SystemErrorResponse.yaml
+          examples:
+            システムエラー:
+              value:
+                message:
+                  type: modal
+                  display: |-
+                    想定外のエラーが発生しました。
+                    大変お手数ですが、暫くしてから再度お試しください。
+                    暫くしても解決しない場合はお手数ですが、「お問い合わせ」画面よりお問い合わせください。
+                error:
+                  type: system
+                  detail: 想定外のバックエンドエラー発生
+    TimeoutError:
+      description: サーバー側の処理が遅く、タイムアウトエラーが発生した時のエラーレスポンス
+      content:
+        application/json:
+          schema:
+            $ref: ./models/Response/TimeoutErrorResponse.yaml
+          examples:
+            タイムアウトエラー:
+              value:
+                message:
+                  type: modal
+                  display: |-
+                    処理に時間がかかっており失敗しました。
+                    お手数おかけしますが、暫くしてから再度お試しください。
+                error:
+                  type: system
+                  detail: サーバーの処理に時間がかかっていることによるタイムアウトエラー
+    TooManyRequestError:
+      description: サービスへのアクセスが込み合っているときのエラーレスポンス
+      content:
+        application/json:
+          schema:
+            $ref: ./models/Response/TooManyRequestResponse.yaml
+          examples:
+            リクエスト過多:
+              value:
+                message:
+                  type: modal
+                  display: |-
+                    現在大変込み合っております。
+                    お手数おかけしますが、暫くしてから再度お試しください。
+                error:
+                  type: system
+                  detail: リクエスト過多によるエラー
+  examples:
+    ResourceMismatchError:
+      value:
+        message:
+          type: modal
+          display: ''
+        error:
+          type: buisiness
+          detail: 存在しないIDへアクセスした場合
+          action: return
+    NotExistIdError:
+      value:
+        message:
+          type: modal
+          display: |-
+            存在しないリソースへのアクセスを検知しました。
+            お手数ですが、前の画面に戻り再度お選びください。
+        error:
+          type: buisiness
+          detail: 存在しないIDへアクセスした場合
+          action: return
 security:
   - ID-Token: []
