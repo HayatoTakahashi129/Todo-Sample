@@ -6,6 +6,9 @@ jobs:
     steps:
       - name: Checkout branch
         uses: actions/checkout@v3
+      - name: test
+        run: cd / && tree
+        shell: bash
       - name: modify Swagger and commit
         uses: HayatoTakahashi129/swaggerModifier@develop
         with:
