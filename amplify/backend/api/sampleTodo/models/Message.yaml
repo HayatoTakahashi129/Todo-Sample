@@ -1,0 +1,50 @@
+title: Message
+x-stoplight:
+  id: gi7pvi5136rec
+type: object
+description: APIの処理の結果通知メッセージ。
+properties:
+  message:
+    type: object
+    x-stoplight:
+      id: rm6tcejua046x
+    minProperties: 2
+    maxProperties: 2
+    additionalProperties: false
+    required:
+      - type
+      - display
+    description: ユーザに通知するメッセージ内容
+    properties:
+      type:
+        type: string
+        x-stoplight:
+          id: w2aorofgogdcg
+        description: 表示種別。成功時・失敗時・モーダルの３パターン
+        enum:
+          - success
+          - failure
+          - modal
+        example: success
+      display:
+        type: string
+        x-stoplight:
+          id: pm75vpxr215uf
+        description: 表示するメッセージ内容
+        example: APIの処理が成功しました。
+required:
+  - message
+examples:
+  - message:
+      type: success
+      display: APIの処理が成功しました。
+  - message:
+      type: failure
+      display: |-
+        お客様のステータスが最新ではございません。
+        お手数ですがページを更新の上再度実施をお願いいたします。
+  - message:
+      type: modal
+      display: |-
+        しばらくサイトが使えなくなる可能性がございます。
+        それでも実施しますか？

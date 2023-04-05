@@ -1,0 +1,19 @@
+title: SystemBlockageResponse
+x-stoplight:
+  id: 8yiw7i6a06o5i
+description: システム閉塞時のエラーレスポンス
+allOf:
+  - $ref: ../Message.yaml
+  - $ref: ../Error.yaml
+    x-stoplight:
+      id: p8domquz5bvul
+examples:
+  - message:
+      type: modal
+      display: |-
+        以下の時間帯で現在システムの使用ができません。
+         2023年3月1日 12:00 ~ 2023年3月1日 15:00
+        お手数ですが、上記時間外で再度ログインを実施いただくようお願いいたします。
+    error:
+      type: system
+      detail: システム閉塞の実施期間中によるエラー

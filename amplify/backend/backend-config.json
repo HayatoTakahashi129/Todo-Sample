@@ -1,11 +1,55 @@
 {
+  "api": {
+    "sampleTodo": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "sampleTodoTodo"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
+  "auth": {
+    "cognitodemobd24d449": {
+      "customAuth": false,
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
+        },
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito"
+    }
+  },
   "function": {
-    "cognitodemo881eb16cDefineAuthChallenge": {
+    "cognitodemo881eb16cCreateAuthChallenge": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "cognitodemo881eb16cCreateAuthChallenge": {
+    "cognitodemo881eb16cDefineAuthChallenge": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -15,74 +59,75 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "sampleTodoApiTodo": {
+    "sampleTodoTodo": {
       "build": true,
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "storage",
-          "resourceName": "todos",
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "attributeEnvMap": {
-            "Name": "TABLE_NAME",
-            "Arn": "TABLE_ARN"
-          }
-        }
-      ]
+      "service": "Lambda"
     }
   },
-  "auth": {
-    "cognitodemobd24d449": {
-      "service": "Cognito",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "customAuth": false,
-      "frontendAuthConfig": {
-        "socialProviders": [],
-        "usernameAttributes": [
-          "EMAIL"
-        ],
-        "signupAttributes": [
-          "EMAIL"
-        ],
-        "passwordProtectionSettings": {
-          "passwordPolicyMinLength": 8,
-          "passwordPolicyCharacters": []
-        },
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "verificationMechanisms": [
-          "EMAIL"
-        ]
-      }
+  "parameters": {
+    "AMPLIFY_function_cognitodemo881eb16cCreateAuthChallenge_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "cognitodemo881eb16cCreateAuthChallenge"
+        }
+      ]
+    },
+    "AMPLIFY_function_cognitodemo881eb16cCreateAuthChallenge_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "cognitodemo881eb16cCreateAuthChallenge"
+        }
+      ]
+    },
+    "AMPLIFY_function_cognitodemo881eb16cDefineAuthChallenge_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "cognitodemo881eb16cDefineAuthChallenge"
+        }
+      ]
+    },
+    "AMPLIFY_function_cognitodemo881eb16cDefineAuthChallenge_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "cognitodemo881eb16cDefineAuthChallenge"
+        }
+      ]
+    },
+    "AMPLIFY_function_cognitodemo881eb16cVerifyAuthChallengeResponse_RECAPTCHASECRET": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "cognitodemo881eb16cVerifyAuthChallengeResponse"
+        }
+      ]
+    },
+    "AMPLIFY_function_cognitodemo881eb16cVerifyAuthChallengeResponse_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "cognitodemo881eb16cVerifyAuthChallengeResponse"
+        }
+      ]
+    },
+    "AMPLIFY_function_cognitodemo881eb16cVerifyAuthChallengeResponse_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "cognitodemo881eb16cVerifyAuthChallengeResponse"
+        }
+      ]
     }
   },
   "storage": {
     "todos": {
-      "service": "DynamoDB",
-      "providerPlugin": "awscloudformation"
-    }
-  },
-  "api": {
-    "sampleTodo": {
-      "service": "API Gateway",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "sampleTodoApiTodo",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        }
-      ]
+      "service": "DynamoDB"
     }
   }
 }

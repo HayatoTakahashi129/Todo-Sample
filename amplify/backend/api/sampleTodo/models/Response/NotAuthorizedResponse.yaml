@@ -1,0 +1,11 @@
+x-stoplight:
+  id: gxvxlizus32ip
+examples:
+  - error:
+      type: system
+      detail: 未認証状態によるAPI打鍵エラー
+description: 未ログイン状態・トークンの有効期限切れ状態でのAPIリクエストが実施されたときに返却されるレスポンス
+allOf:
+  - $ref: ../Error.yaml
+    x-stoplight:
+      id: ovg0s2qr1r3dv

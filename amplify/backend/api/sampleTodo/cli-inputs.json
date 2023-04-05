@@ -1,22 +1,9 @@
 {
   "version": 1,
   "paths": {
-    "/todo": {
-      "name": "/todo",
-      "lambdaFunction": "sampleTodoApiTodo",
-      "permissions": {
-        "setting": "private",
-        "auth": [
-          "create",
-          "read",
-          "update",
-          "delete"
-        ]
-      }
-    },
     "/todos": {
       "name": "/todos",
-      "lambdaFunction": "sampleTodoApiTodo",
+      "lambdaFunction": "sampleTodoTodo",
       "permissions": {
         "setting": "private",
         "auth": [
@@ -24,16 +11,6 @@
           "read",
           "update",
           "delete"
-        ]
-      }
-    },
-    "/todo/add": {
-      "name": "/todo/add",
-      "lambdaFunction": "sampleTodoApiTodo",
-      "permissions": {
-        "setting": "private",
-        "auth": [
-          "create"
         ]
       }
     }

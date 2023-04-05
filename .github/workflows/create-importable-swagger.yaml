@@ -1,0 +1,18 @@
+name: create importable swagger for API-GATEWAY
+on: [push]
+jobs:
+  create-importable-swagger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+      - name: modify Swagger and commit
+        uses: HayatoTakahashi129/swaggerModifier@develop
+        with:
+          input-file-path: amplify/backend/api/sampleTodo/TodoSample.yaml
+          output-file-path: amplify/backend/api/sampleTodo/output.json
+          env: dev
+          service-name: sampleTodo
+          origin: "http://localhost:3000"
+          cognito-user-pool-id: ap-northeast-1_WKypnxDvl
+          output-file-format: json

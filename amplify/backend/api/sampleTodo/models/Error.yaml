@@ -1,0 +1,56 @@
+title: Error
+x-stoplight:
+  id: xzlp6dvzfykhl
+type: object
+description: APIの処理結果でエラーが発生した際のエラー通知オブジェクト
+examples:
+  - error:
+      type: validation
+      detail: '${name}欄の入力は必須になります。'
+  - error:
+      type: 'buisiness,'
+      detail: 選択されたサイトは既に削除済み
+  - error:
+      type: 'system,'
+      detail: システム閉塞による未受付状態
+  - error:
+      type: 'buisiness,'
+      detail: クライアント側のリソースが最新ではない
+      action: formSaveReload
+properties:
+  error:
+    type: object
+    x-stoplight:
+      id: 5x8pbdbnvuiwd
+    description: APIのエラー結果詳細
+    required:
+      - type
+      - detail
+    properties:
+      type:
+        type: string
+        x-stoplight:
+          id: avbrtxxm0xkfj
+        description: エラーの種類。
+        enum:
+          - validation
+          - buisiness
+          - system
+        example: validation
+      detail:
+        type: string
+        x-stoplight:
+          id: zw8meb1lyt84g
+        description: エラーの詳細説明部分
+        example: '${name}欄の入力は必須になります。'
+      action:
+        type: string
+        x-stoplight:
+          id: 2jxgx8iamu784
+        description: クライアント側に何かしらのアクションを要求する場合の内容
+        enum:
+          - formSaveReload
+          - home
+        example: formSaveReload
+required:
+  - error

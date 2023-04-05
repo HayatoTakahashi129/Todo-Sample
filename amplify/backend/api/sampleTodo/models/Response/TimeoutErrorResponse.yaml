@@ -1,0 +1,18 @@
+title: TiemoutErrorResponse
+x-stoplight:
+  id: ktstfi2byqac0
+description: サーバー側の処理が遅く、タイムアウトエラーが発生した時のエラーレスポンス
+allOf:
+  - $ref: ../Message.yaml
+  - $ref: ../Error.yaml
+    x-stoplight:
+      id: qnjx8o78ccy9x
+examples:
+  - message:
+      type: modal
+      display: |-
+        処理に時間がかかっており失敗しました。
+        お手数おかけしますが、暫くしてから再度お試しください。
+    error:
+      type: system
+      detail: サーバーの処理に時間がかかっていることによるタイムアウトエラー

@@ -1,0 +1,19 @@
+title: SystemErrorResponse
+x-stoplight:
+  id: i34wz2ejxyo6p
+description: バックエンド側で想定外のシステムエラーが発生した時に表示されるエラーレスポンス
+allOf:
+  - $ref: ../Message.yaml
+  - $ref: ../Error.yaml
+    x-stoplight:
+      id: 82bejmrvlvuy9
+examples:
+  - message:
+      type: modal
+      display: |-
+        想定外のエラーが発生しました。
+        大変お手数ですが、暫くしてから再度お試しください。
+        暫くしても解決しない場合はお手数ですが、「お問い合わせ」画面よりお問い合わせください。
+    error:
+      type: system
+      detail: 想定外のバックエンドエラー発生
